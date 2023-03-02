@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Show Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+          crossorigin="anonymous">
+    <style>
+        .body{
+            background-color: orchid;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 50px;
+            margin-top: 50px;
+        }
+
+        .form {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 50px;
+        }
+
+        .first-input {
+            width: 400px;
+            height: 40px;
+            border-radius: 5px;
+            font-size: 20px;
+            color: black;
+        }
+
+        .search-button {
+            padding: 5px 10px;
+            background-color: cornflowerblue;
+            color: aliceblue;
+            border-radius: 10px;
+            margin-left: 10px;
+        }
+
+        .search-button:hover {
+            background-color: blue;
+        }
+
+        .clear-button {
+            font-size: 20px;
+            font-weight: 900;
+            color: aliceblue;
+            background-color: indianred;
+            padding: 0px 15px;
+            border-radius: 10px;
+            margin-left: 10px;
+        }
+
+        .clear-button:hover {
+            background-color: red;
+        }
+
+        .name {
+            border: 1px solid black;
+            min-width: 100px;
+            padding: 0px;
+            background-color: cornflowerblue;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .second-form {
+            font-size: 18px;
+            color: white;
+        }
+
+        .second-form > input {
+            color: white;
+            background-color: slateblue;
+        }
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            margin-top: 10px;
+            width: 300px;
+            flex-wrap: wrap;
+        }
+
+        .btn-outline-primary {
+            padding: 5px 10px;
+            background-color: blueviolet;
+            color: azure;
+            border-radius: 10px;
+            margin-left: 10px;
+        }
+    </style>
+
+</head>
+<body class="body">
+<div>
+    <form class="form" th:action="@{/hospitals/show}" method="get">
+        <input type="text" name="keyWord" th:value="${keyWord}" class="first-input"
+               placeholder="Search hospitals">
+        <button type="submit" class="search-button">Search</button>
+    </form>
+    <form class="form" th:action="@{/hospitals/show}" method="get">
+        <button class="clear-button" type="submit">X</button>
+    </form>
+    <form class="form">
+        <a class="btn btn-outline-primary" role="button" href="/hospitals/new">Add new hospital</a>
+    </form>
+
+</div>
+
+<div class="container">
+    <div style="width: 18rem;"
+         th:each="hospital:${hospitals}">
+        <img th:src="${hospital.getImageLink()}" object-fit width="223" height="170px">
+
+        <div class="card-body">
+
+            <h5 th:text="${hospital.name }" class="name">Name </h5>
+            <h5 th:text="${hospital.address }" class="name">Address </h5>
+            <form th:method="GET" th:action="@{/hospitals/{id}/mainPage(id=${hospital.getId()})}" class="second-form">
+                <input type="submit" th:value="Profile"/>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

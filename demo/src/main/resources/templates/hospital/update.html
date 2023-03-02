@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>update</title>
+</head>
+<style>
+    body {
+        background-color: orchid;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 130px auto;
+        max-width: 500px;
+    }
+
+    .forms {
+        display: flex;
+        flex-direction: column;
+        height: 30vh;
+        justify-content: space-around;
+        border-radius: 10px;
+        background-color: white;
+        padding: 1rem;
+    }
+
+    button {
+        width: 4rem;
+        padding: 0.3rem 0 0.3rem 0;
+        border-radius: 10px;
+        border: none;
+        background-color: #e04949;
+    }
+
+    .info-block {
+        display: flex;
+        width: 30vw;
+        justify-content: space-between;
+    }
+</style>
+
+<body>
+
+
+<form class="forms" th:method="POST" th:action="@{/hospitals/{id}/update(id=${hospital.getId()})}"
+      th:object="${hospital}">
+
+    <div class="info-block">
+        <label for="name">Name</label>
+        <input type="text" th:field="*{name}" id="name">
+
+    </div>
+    <div class="info-block">
+        <label for="address">Address</label>
+        <input type="text" th:field="*{address}" id="address">
+
+    </div>
+    <div class="info-block">
+        <label for="imageLink">ImageLink</label>
+        <input type="text" th:field="*{imageLink}" id="imageLink">
+
+    </div>
+
+    <div>
+        <button type="submit">Update</button>
+    </div>
+</form>
+<form th:method="GET" th:action="@{/hospitals/{id}/mainPage(id=${hospital.getId()})}">
+    <button type="submit" th:value="Cancel">Cancel</button>
+</form>
+
+</body>
+
+</html>

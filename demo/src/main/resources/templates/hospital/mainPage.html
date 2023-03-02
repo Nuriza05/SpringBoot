@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Main Page</title>
+    <style>
+
+        .body {
+            background-color: orchid;
+        }
+
+        .info-box {
+            margin: 10rem auto 0 auto;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(-45deg, #f3d2c9, #d0a1ae, #54a0b9, #8ce3d6);
+            justify-content: center;
+            align-items: center;
+            width: 20%;
+            height: fit-content;
+            border-radius: 16px;
+            padding: 1rem;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+
+        }
+
+        .info {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+        }
+
+        .btn-container {
+            display: flex;
+            width: 100%;
+            justify-content: space-around;
+            gap: 1rem;
+        }
+
+        .btns {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+        }
+
+        .form > button {
+            border: none;
+            border-radius: 1rem;
+            background-color: #4fb0d3;
+        }
+
+        button:hover {
+            background-color: #54a0b9;
+        }
+
+        .navigate-btn {
+            background-color: #8ce3d6;
+            padding: 0.6rem;
+            border: none;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="body">
+<button class="navigate-btn">
+    <a th:href="@{/hospitals/show}">Go to Main</a>
+</button>
+<div class="info-box">
+    <div class="info">
+        <p>Id </p>
+        <p th:text="${hospital.getId()}"></p>
+    </div>
+    <div class="info">
+        <p>Name </p>
+        <p th:text="${hospital.getName()}"></p>
+    </div>
+    <div class="info">
+        <p>Address </p>
+        <p th:text="${hospital.getAddress()}"></p>
+    </div>
+    <div class="info">
+        <p>Doctors</p>
+        <p th:text="${doctorCount}"></p>
+    </div>
+    <div class="info">
+        <p>Patients</p>
+        <p th:text="${patientCount}"></p>
+    </div>
+    <div class="btn-container">
+        <div class="btns">
+            <form class="form" th:method="GET" th:action="@{/departments/{hospitalId}(hospitalId=${hospitalId})}">
+                <button type="submit" th:value="departments">Departments</button>
+            </form>
+            <form class="form" th:method="GET" th:action="@{/doctors/{hospitalId}(hospitalId=${hospitalId})}">
+                <button type="submit" th:value="doctors">Doctors</button>
+            </form>
+
+            <form class="form" th:method="GET" th:action="@{/patients/{hospitalId}(hospitalId=${hospitalId})}">
+                <button type="submit" th:value="patients">Patients</button>
+            </form>
+
+        </div>
+        <div class="btns">
+            <form class="form" th:method="GET" th:action="@{/appointments/{hospitalId}(hospitalId=${hospitalId})}">
+                <button th:value="appointments">Appointment</button>
+            </form>
+            <form class="form" th:method="GET" th:action="@{/hospitals/{id}/edit(id=${hospital.getId()})}">
+                <button class="" type="submit" th:value="Edit">Edit</button>
+            </form>
+            <form class="form" th:method="GET" th:action="@{/hospitals/{id}/delete(id=${hospital.getId()})}">
+                <button type="submit" th:value="delete">Delete</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

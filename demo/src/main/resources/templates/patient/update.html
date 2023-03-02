@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>update</title>
+</head>
+<style>
+    body {
+        background-color: orchid;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 130px auto;
+        max-width: 500px;
+    }
+
+    .forms {
+        display: flex;
+        flex-direction: column;
+        height: 30vh;
+        justify-content: space-around;
+        border-radius: 10px;
+        background-color: white;
+        padding: 1rem;
+    }
+
+    button {
+        width: 4rem;
+        padding: 0.3rem 0 0.3rem 0;
+        border-radius: 10px;
+        border: none;
+        background-color: #e04949;
+    }
+
+    .info-block {
+        display: flex;
+        width: 30vw;
+        justify-content: space-between;
+    }
+</style>
+<body>
+
+<form class="forms" th:action="@{update}" th:object="${patient}" th:method="POST">
+    <input type="hidden" th:field="*{id}">
+
+    <div class="info-block">
+        <label for="first name">first name</label>
+        <input type="text" th:field="*{firstName}" id="first name">
+    </div>
+    <div class="info-block">
+        <label for="last name">last name</label>
+        <input type="text" th:field="*{lastName}" id="last name">
+    </div>
+    <div class="info-block">
+        <label for="phone number">phone number</label>
+        <input type="text" th:field="*{phoneNumber}" id="phone number">
+    </div>
+    <div class="info-block">
+        <label for="phone number">Gender</label>
+        <select th:field="*{gender}">
+            <option value="">--Gender--</option>
+            <option th:each="gen : ${genders}" th:value="${gen.name()}"
+                    th:text="${gen.name}"></option>
+        </select>
+    </div>
+    <div class="info-block">
+        <label for="email">email</label>
+        <input type="text" th:field="*{email}" id="email">
+    </div>
+    <button type="submit">Update</button>
+</form>
+<form th:action="@{/patients/{hospitalId}(hospitalId=${hospitalId})}">
+    <input type="submit" th:value="Cancel"/>
+</form>
+
+</body>
+
+</html>

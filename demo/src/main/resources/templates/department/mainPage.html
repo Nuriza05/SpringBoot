@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Main page</title>
+    <style>
+        .body{
+            background-color: orchid;
+        }
+        .cssbuttons-io-button {
+            display: flex;
+            align-items: center;
+            font-family: inherit;
+            font-weight: 500;
+            font-size: 16px;
+            padding: 0.7em 1.4em 0.7em 1.1em;
+            color: white;
+            background: cornflowerblue;
+            border: none;
+            box-shadow: 0 0.7em 1.5em -0.5em #14a73e98;
+            letter-spacing: 0.05em;
+            border-radius: 20em;
+            width: 6rem;
+            height: 2rem;
+        }
+
+        .cssbuttons-io-button svg {
+            margin-right: 6px;
+        }
+
+        .cssbuttons-io-button:hover {
+            box-shadow: 0 0.5em 1.5em -0.5em #14a73e98;
+        }
+
+        .cssbuttons-io-button:active {
+            box-shadow: 0 0.3em 1em -0.5em #14a73e98;
+        }
+        .info-box {
+            margin: 10rem auto 0 auto;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(-45deg, #f3d2c9, #d0a1ae, #54a0b9, #8ce3d6);
+            justify-content: center;
+            align-items: center;
+            width: 20%;
+            height: fit-content;
+            border-radius: 16px;
+            padding: 1rem;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+
+        }
+        .buttons{
+            display: flex;
+            margin-top: 1rem;
+            margin-left: 1rem;
+            gap:1rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+
+        }
+        .btn-container {
+            display: flex;
+            width: 100%;
+            justify-content: space-around;
+            gap: 1rem;
+        }
+        .form>button {
+            border: none;
+            border-radius: 1rem;
+            background-color: #4fb0d3;
+        }
+
+        button:hover {
+            background-color: #54a0b9;
+        }
+
+        .info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+    </style>
+
+</head>
+<body class="body">
+<div class="buttons">
+    <a th:href="@{/hospitals/{hospitalId}/mainPage(hospitalId=${hospitalId})}">
+        <button class="cssbuttons-io-button" type="button">Back</button>
+    </a>
+    <a th:href="@{/departments/{hospitalId}/new(hospitalId=${hospitalId})}">
+        <button class="cssbuttons-io-button">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"></path></svg>
+            <span>Add</span>
+        </button>
+    </a>
+</div>
+<div class="info-box" th:each="dep:${departments}">
+    <div class="info">
+
+        <p>Id</p>
+        <p th:text="${dep.getId()}"></p>
+    </div>
+    <div class="info">
+        <p>Name</p>
+        <p th:text="${dep.getName()}"></p>
+    </div>
+    <div class="btn-container">
+        <form class="form" th:method="GET"
+              th:action="@{/departments/{hospitalId}/{departmentId}/edit(hospitalId=${hospitalId},departmentId=${dep.getId()})}">
+            <input type="submit" th:value="Update"/>
+        </form>
+        <form class="form" th:method="GET"
+              th:action="@{/departments/{hospitalId}/{departmentId}/delete(hospitalId=${hospitalId},departmentId=${dep.getId()})}">
+            <input type="submit" th:value="Delete"/>
+        </form>
+    </div>
+</div>
+</body>
+</html>
