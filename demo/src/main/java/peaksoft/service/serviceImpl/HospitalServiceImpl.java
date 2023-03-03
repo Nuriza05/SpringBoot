@@ -25,7 +25,8 @@ public class HospitalServiceImpl implements HospitalService {
     @Override
     public List<Hospital> getAll(String keyWord) {
         if(keyWord !=  null && !keyWord.trim().isEmpty()) {
-            return   hospitalRepo.searchByName(keyWord);
+            return
+                    hospitalRepo.searchByName("%"+keyWord+"%");
         }else {
             return hospitalRepo.findAll();
         }
@@ -53,7 +54,6 @@ public class HospitalServiceImpl implements HospitalService {
         hospital.setAddress(newHospital.getAddress());
         hospital.setAppointments(newHospital.getAppointments());
         hospital.setDoctors(newHospital.getDoctors());
-//        hospital.setDepartments(newHospital.getDepartments());
         hospital.setPatients(newHospital.getPatients());
         hospital.setImageLink(newHospital.getImageLink());
         hospitalRepo.save(hospital);

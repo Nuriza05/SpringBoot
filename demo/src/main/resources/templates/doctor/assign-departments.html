@@ -13,7 +13,6 @@
             <label for="departmentsId">Select departments:</label>
             <select  id="departmentsId" name="departmentsId" multiple required>
                 <option th:each="dep:${departments}" th:value="${dep.getId()}"
-                        th:selected="${doctor.departments.contains(dep)}"
                         th:text="${dep.getName()}"></option>
             </select>
         </div>

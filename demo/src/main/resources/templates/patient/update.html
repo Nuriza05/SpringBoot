@@ -45,14 +45,19 @@
     <div class="info-block">
         <label for="first name">first name</label>
         <input type="text" th:field="*{firstName}" id="first name">
+        <p style="color: red;" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">first name error</p>
     </div>
     <div class="info-block">
         <label for="last name">last name</label>
         <input type="text" th:field="*{lastName}" id="last name">
+        <p style="color: red;" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">last name error</p>
     </div>
     <div class="info-block">
         <label for="phone number">phone number</label>
         <input type="text" th:field="*{phoneNumber}" id="phone number">
+    </div>
+    <div th:if="${phoneNumber}">
+        <p style="color: red">[[${phoneNumber}]]</p>
     </div>
     <div class="info-block">
         <label for="phone number">Gender</label>
@@ -65,6 +70,10 @@
     <div class="info-block">
         <label for="email">email</label>
         <input type="text" th:field="*{email}" id="email">
+        <p style="color: red;" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">email error</p>
+    </div>
+    <div th:if="${Email}">
+        <p style="color: red">[[${Email}]]</p>
     </div>
     <button type="submit">Update</button>
 </form>

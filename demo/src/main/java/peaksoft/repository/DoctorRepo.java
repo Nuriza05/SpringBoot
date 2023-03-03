@@ -12,7 +12,7 @@ import java.util.List;
  **/
 public interface DoctorRepo extends JpaRepository<Doctor,Long> {
 
-//     void assignDepsToDoctor(Long docId, List<Long> depsId);
+
 
 
 }

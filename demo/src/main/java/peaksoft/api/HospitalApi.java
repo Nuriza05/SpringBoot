@@ -1,7 +1,9 @@
 package peaksoft.api;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import peaksoft.model.Hospital;
 import peaksoft.service.DoctorService;
@@ -46,7 +48,11 @@ public class HospitalApi {
     }
 
     @PostMapping("/savePage")
-    public String save(@ModelAttribute("newHospital") Hospital hospital) {
+    public String save(@ModelAttribute("newHospital")@Valid Hospital hospital,
+                       BindingResult bindingResult) {
+        if(bindingResult.hasErrors()){
+            return "hospital/savePage";
+        }
         hospitalService.save(hospital);
         return "redirect:/hospitals/show";
     }

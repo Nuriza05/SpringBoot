@@ -1,9 +1,7 @@
 package peaksoft.service.serviceImpl;
-
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import peaksoft.exceptions.MyException;
 import peaksoft.model.Appointment;
 import peaksoft.model.Department;
 import peaksoft.model.Hospital;

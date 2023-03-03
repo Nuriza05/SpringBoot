@@ -120,7 +120,7 @@
 
         <div class="card-body">
 
-            <h5 th:text="${hospital.name }" class="name">Name </h5>
+            <h5 th:text="${hospital.name}" class="name">Name</h5>
             <h5 th:text="${hospital.address }" class="name">Address </h5>
             <form th:method="GET" th:action="@{/hospitals/{id}/mainPage(id=${hospital.getId()})}" class="second-form">
                 <input type="submit" th:value="Profile"/>

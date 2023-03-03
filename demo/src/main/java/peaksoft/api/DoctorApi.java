@@ -1,7 +1,10 @@
 package peaksoft.api;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import peaksoft.model.Department;
 import peaksoft.model.Doctor;
@@ -40,9 +43,19 @@ public class DoctorApi {
 
     @PostMapping("/{hospitalId}/savePage")
     public String save(@PathVariable Long hospitalId,
-                       @ModelAttribute("newDoctor") Doctor doctor) {
-        doctorService.save(hospitalId, doctor);
-        return "redirect:/doctors/" + hospitalId;
+                       @ModelAttribute("newDoctor")@Valid Doctor doctor,
+                       BindingResult bindingResult, Model model) {
+        if(bindingResult.hasErrors()){
+            return "doctor/savePage";
+        }
+        try{
+            doctorService.save(hospitalId, doctor);
+            return "redirect:/doctors/" + hospitalId;
+        }catch (DataIntegrityViolationException e){
+            model.addAttribute("Email","This email is already exists in database!");
+            return "doctor/savePage";
+        }
+
     }
 
 
@@ -89,9 +102,18 @@ public class DoctorApi {
     @PostMapping("/{hospitalId}/{doctorId}/update")
     public String update(@PathVariable Long hospitalId,
                          @PathVariable Long doctorId,
-                         @ModelAttribute("doctor") Doctor doctor) {
-        doctorService.update(doctorId, doctor);
-        return "redirect:/doctors/" + hospitalId;
+                         @ModelAttribute("doctor")@Valid Doctor doctor,
+    BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "doctor/update";
+        }
+        try {
+            doctorService.update(doctorId, doctor);
+            return "redirect:/doctors/" + hospitalId;
+        }catch (DataIntegrityViolationException e){
+            model.addAttribute("Email","This email is already exists in database!");
+            return "doctor/update";
+        }
     }
 
 

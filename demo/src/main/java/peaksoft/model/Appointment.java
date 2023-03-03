@@ -39,7 +39,6 @@ public class Appointment {
             CascadeType.MERGE,
             CascadeType.PERSIST
     })
-
     private Department department;
 
     @Transient

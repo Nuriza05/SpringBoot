@@ -1,7 +1,10 @@
 package peaksoft.api;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import peaksoft.exceptions.MyException;
 import peaksoft.model.Department;
@@ -35,9 +38,15 @@ public class DepartmentApi {
     @PostMapping("/{hospitalId}/savePage")
     public String save(@PathVariable Long hospitalId,
                        @ModelAttribute("newDepartment")
-                       Department department) throws MyException {
-        departmentService.save(hospitalId,department);
-        return "redirect:/departments/"+hospitalId;
+                       Department department, Model model) throws MyException {
+        try {
+            departmentService.save(hospitalId,department);
+            return "redirect:/departments/"+hospitalId;
+        }catch (DataIntegrityViolationException e){
+            model.addAttribute("name", "This name is already exists in database!");
+            return "department/savePage";
+        }
+
     }
 
     @GetMapping("/{hospitalId}/{departmentId}/delete")
@@ -59,8 +68,14 @@ public class DepartmentApi {
     @PostMapping("/{hospitalId}/{departmentId}/update")
     public String update(@PathVariable("hospitalId") Long hospitalId,
                          @PathVariable("departmentId")Long id,
-                         @ModelAttribute("department") Department department) throws MyException {
-        departmentService.update(id, department);
-        return "redirect:/departments/"+hospitalId;
+                         @ModelAttribute("department") Department department, Model model) throws MyException {
+        try{
+            departmentService.update(id, department);
+            return "redirect:/departments/"+hospitalId;
+        }catch (DataIntegrityViolationException e){
+            model.addAttribute("name","This name is already exists in database!");
+            return "department/update";
+        }
+
     }
 }

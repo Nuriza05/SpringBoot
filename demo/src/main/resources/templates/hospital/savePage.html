@@ -44,16 +44,19 @@
     <div class="info-block">
         <label for="name">Name</label>
         <input type="text" th:field="*{name}" id="name">
+        <p style="color: red;" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name error</p>
     </div>
 
     <div class="info-block">
         <label for="address">Address</label>
         <input type="text" th:field="*{address}" id="address">
+        <p style="color: red;" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">address error</p>
     </div>
 
     <div class="info-block">
         <label for="imageLink">ImageLink</label>
         <input type="text" th:field="*{imageLink}" id="imageLink">
+        <p style="color: red;" th:if="${#fields.hasErrors('imageLink')}" th:errors="*{imageLink}">email error</p>
     </div>
 
     <div>

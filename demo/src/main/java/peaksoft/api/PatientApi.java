@@ -61,6 +61,7 @@ public class PatientApi {
         }
     }
 
+
     @GetMapping("/{hospitalId}/{patientId}/delete")
     public String deleteById(@PathVariable Long hospitalId,@PathVariable Long patientId) {
         patientService.deleteById(patientId);
@@ -73,12 +74,27 @@ public class PatientApi {
         model.addAttribute("genders",Gender.values());
         return "patient/update";
     }
-
     @PostMapping("/{hospitalId}/{patientId}/update")
     public String update(@PathVariable Long hospitalId,
                          @PathVariable Long patientId,
-                         @ModelAttribute("patient") Patient patient) throws MyException {
-        patientService.update(patientId, patient);
-        return "redirect:/patients/"+hospitalId;
+                         @ModelAttribute("patient") @Valid Patient patient, BindingResult bindingResult,
+                         Model model) throws MyException {
+        if(bindingResult.hasErrors()){
+            model.addAttribute("genders", Gender.values());
+            return "patient/update";
+        }
+        try {
+            patientService.update(patientId, patient);
+            return "redirect:/patients/"+hospitalId;
+        } catch (MyException e) {
+            model.addAttribute("phoneNumber",e.getMessage());
+            model.addAttribute("genders", Gender.values());
+            return "patient/update";
+        }
+        catch (DataIntegrityViolationException e){
+            model.addAttribute("genders",Gender.values());
+            model.addAttribute("Email","This email is already exists in database!");
+            return "patient/update";
+        }
     }
 }
