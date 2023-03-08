@@ -72,8 +72,11 @@ public class HospitalApi {
 
     @PostMapping("/{id}/update")
     public String update(@PathVariable("id") Long id,
-                         @ModelAttribute("newHospital")
-                         Hospital newHospital) {
+                         @ModelAttribute("newHospital")@Valid
+                         Hospital newHospital,BindingResult bindingResult) {
+        if (bindingResult.hasErrors()){
+            return "hospital/update";
+        }
         hospitalService.update(id, newHospital);
         return "redirect:/hospitals/show";
     }

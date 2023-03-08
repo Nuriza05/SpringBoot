@@ -2,6 +2,7 @@ package peaksoft.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,9 +27,10 @@ public class Hospital {
             generator = "hospital_gen")
     private Long id;
     @NotEmpty(message = "Name shouldn't be empty!")
-
+    @NotNull(message = "Name shouldn't be null!")
     private String name;
     @NotEmpty(message = "Address shouldn't be empty!")
+    @NotNull(message = "Address shouldn't be null!")
     private String address;
     @OneToMany(mappedBy = "hospital", cascade = CascadeType.ALL)
     private List<Doctor> doctors;
@@ -39,6 +41,7 @@ public class Hospital {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Appointment> appointments;
     @NotEmpty(message = "Image shouldn't be empty!")
+    @NotNull(message = "Image shouldn't be null!")
     private String imageLink;
 
     public void addAppoint(Appointment app) {

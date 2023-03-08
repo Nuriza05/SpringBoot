@@ -44,7 +44,12 @@
   <div class="info-block">
     <label for="date">LocalDate</label>
     <input type="date" th:field="*{date}" id="date">
+    <p style="color: red;" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">date error</p>
   </div>
+  <div th:if="${date}">
+    <p style="color: red">[[${date}]]</p>
+  </div>
+
   <div class="info-block">
     <label for="date">Departments</label>
     <select th:field="*{departmentId}">
@@ -52,6 +57,7 @@
       <option th:each="department : ${departments}" th:value="${department.id}"
               th:text="${department.name}"></option>
     </select>
+    <p style="color: red;" th:if="${#fields.hasErrors('department')}" th:errors="*{department}">dep error</p>
   </div>
   <div class="info-block">
     <label for="date">Doctors</label>
@@ -60,6 +66,7 @@
       <option th:each="doctor : ${doctors}" th:value="${doctor.id}"
               th:text="${doctor.lastName+' '+doctor.firstName}"></option>
     </select>
+    <p style="color: red;" th:if="${#fields.hasErrors('doctor')}" th:errors="*{doctor}">doc error</p>
   </div>
   <div class="info-block">
     <label for="date">Patients</label>
@@ -68,6 +75,7 @@
       <option th:each="patient : ${patients}" th:value="${patient.id}"
               th:text="${patient.getLastName+' '+patient.getFirstName()}"></option>
     </select>
+    <p style="color: red;" th:if="${#fields.hasErrors('patient')}" th:errors="*{patient}">pat error</p>
     <div>
       <button type="submit">Save</button>
     </div>

@@ -8,7 +8,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import peaksoft.model.Department;
 import peaksoft.model.Doctor;
-import peaksoft.service.DepartmentService;
 import peaksoft.service.DoctorService;
 import java.util.List;
 
@@ -16,12 +15,10 @@ import java.util.List;
 @RequestMapping("/doctors")
 public class DoctorApi {
     private final DoctorService doctorService;
-    private final DepartmentService departmentService;
 
     @Autowired
-    public DoctorApi(DoctorService doctorService, DepartmentService departmentService) {
+    public DoctorApi(DoctorService doctorService) {
         this.doctorService = doctorService;
-        this.departmentService = departmentService;
     }
 
 
@@ -63,7 +60,7 @@ public class DoctorApi {
     public String showAssignDoctorsForm(@PathVariable Long hospitalId,
                                         @PathVariable Long doctorId, Model model){
         Doctor doctor = doctorService.getById(doctorId);
-        List<Department> departments = departmentService.getAll(hospitalId);
+        List<Department> departments = doctorService.getAllByDoctorId(doctorId);
         model.addAttribute("doctor",doctor);
         model.addAttribute("departments",departments);
         model.addAttribute(hospitalId);

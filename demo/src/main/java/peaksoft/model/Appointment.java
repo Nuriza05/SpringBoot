@@ -1,8 +1,10 @@
 package peaksoft.model;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.ISBN;
 
 import java.time.LocalDate;
 
@@ -19,26 +21,28 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
                     generator = "appointment_gen")
     private Long id;
+    @NotEmpty(message = "Date shouldn't be empty!!!")
     private LocalDate date;
     @ManyToOne(cascade = {
             CascadeType.DETACH,
             CascadeType.MERGE,
             CascadeType.PERSIST
     })
-
+    @NotEmpty(message = "Patient shouldn't be empty!!!")
     private Patient patient;
     @ManyToOne(cascade = {
             CascadeType.DETACH,
             CascadeType.MERGE,
             CascadeType.PERSIST
     })
-
+    @NotEmpty(message = "Doctor shouldn't be empty!!!")
     private Doctor doctor;
     @ManyToOne(cascade = {
             CascadeType.DETACH,
             CascadeType.MERGE,
             CascadeType.PERSIST
     })
+    @NotEmpty(message = "Department shouldn't be empty!!!")
     private Department department;
 
     @Transient

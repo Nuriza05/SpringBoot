@@ -10,5 +10,5 @@ public interface AppointmentService {
     List<Appointment> getAll(Long id);
     void deleteById(Long hId,Long id);
     Appointment getById(Long id);
-    void update (Long id, Appointment newAppointment);
+    void update (Long id, Appointment newAppointment) throws MyException;
 }

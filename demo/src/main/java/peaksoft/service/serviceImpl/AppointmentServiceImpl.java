@@ -58,11 +58,16 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public void update(Long id, Appointment newAppointment) {
+    public void update(Long id, Appointment newAppointment) throws MyException {
         Appointment appointment = appointmentRepo.findById(id).get();
-        appointment.setDate(newAppointment.getDate());
-        appointment.setPatient(patientRepo.findById(newAppointment.getPatientId()).get());
-        appointment.setDoctor(doctorRepo.findById(newAppointment.getDoctorId()).get());
-        appointment.setDepartment(departmentRepo.findById(newAppointment.getDepartmentId()).get());
+        if (appointment.getDate().isAfter(LocalDate.now())) {
+            appointment.setDate(newAppointment.getDate());
+            appointment.setPatient(patientRepo.findById(newAppointment.getPatientId()).get());
+            appointment.setDoctor(doctorRepo.findById(newAppointment.getDoctorId()).get());
+            appointment.setDepartment(departmentRepo.findById(newAppointment.getDepartmentId()).get());
+        } else {
+            throw new MyException("Date should be in future time!");
+        }
+
     }
 }

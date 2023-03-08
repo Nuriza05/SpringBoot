@@ -1,7 +1,9 @@
 package peaksoft.api;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import peaksoft.exceptions.MyException;
 import peaksoft.model.Appointment;
@@ -50,9 +52,17 @@ public class AppointmentApi {
     @PostMapping("/{hospitalId}/savePage")
     public String save(@PathVariable Long hospitalId,
                        @ModelAttribute("newAppointment")
-                       Appointment appointment) throws MyException {
-        appointmentService.save(hospitalId,appointment);
-        return "redirect:/appointments/"+hospitalId;
+                      @Valid Appointment appointment, BindingResult bindingResult,Model model) throws MyException {
+        if(bindingResult.hasErrors()){
+            return "appointment/savePage";
+        }
+        try {
+            appointmentService.save(hospitalId, appointment);
+            return "redirect:/appointments/" + hospitalId;
+        } catch (MyException e) {
+            model.addAttribute("date",e.getMessage());
+            return "appointment/savePage";
+        }
     }
 
     @GetMapping("/{hospitalId}/{appointmentId}/edit")
@@ -69,9 +79,18 @@ public class AppointmentApi {
     @PostMapping("/{hospitalId}/{appointmentId}/update")
     public String update(@PathVariable Long hospitalId,
                          @PathVariable Long appointmentId,
-                         @ModelAttribute("appointment") Appointment appointment) {
-        appointmentService.update(appointmentId, appointment);
-        return "redirect:/appointments/" + hospitalId;
+                         @ModelAttribute("appointment")@Valid Appointment appointment, BindingResult bindingResult,Model model) throws MyException {
+        if (bindingResult.hasErrors()){
+            return "appointment/update";
+        }
+        try {
+            appointmentService.update(appointmentId, appointment);
+            return "redirect:/appointments/" + hospitalId;
+        }
+        catch (MyException e){
+            model.addAttribute("date",e.getMessage());
+            return "appointment/update";
+        }
     }
 
     @GetMapping("/{hospitalId}/{appointmentId}/delete")

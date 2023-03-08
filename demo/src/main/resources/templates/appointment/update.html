@@ -45,6 +45,10 @@
   <div class="info-block">
     <label for="birthday">Recording date:</label>
     <input type="date" th:field="*{date}" id="birthday" name="birthday" required>
+    <p style="color: red;" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">date error</p>
+  </div>
+  <div th:if="${date}">
+    <p style="color: red">[[${date}]]</p>
   </div>
 
   <div class="info-block">
@@ -54,6 +58,7 @@
               th:text="${pat.getLastName()+' '+pat.getFirstName()}">Facebook
       </option>
     </select>
+    <p style="color: red;" th:if="${#fields.hasErrors('patient')}" th:errors="*{patient}">pat error</p>
   </div>
 
   <div class="info-block">
@@ -63,6 +68,7 @@
               th:text="${doc.getLastName()+' '+doc.getFirstName()}">Doctor
       </option>
     </select>
+    <p style="color: red;" th:if="${#fields.hasErrors('doctor')}" th:errors="*{doctor}">doc error</p>
   </div>
 
   <div class="info-block">
@@ -70,6 +76,7 @@
     <select th:field="*{departmentId}" id="dep" name="domain" required>
       <option th:each="dep : ${departments}" th:value="${dep.getId()}" th:text="${dep.getName()}">dep</option>
     </select>
+    <p style="color: red;" th:if="${#fields.hasErrors('department')}" th:errors="*{department}">dep error</p>
   </div>
   <div>
     <button type="submit">Update</button>
